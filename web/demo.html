@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotes Recommendation Chatbot - Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 500px;
+            height: 700px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bot-avatar {
+            font-size: 40px;
+            background: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-info h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .header-info p {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .demo-badge {
+            background: #ff6b6b;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-left: auto;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-content {
+            padding: 12px 16px;
+            border-radius: 18px;
+            max-width: 80%;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        .bot-message .message-content {
+            background: white;
+            color: #333;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-message {
+            text-align: right;
+        }
+
+        .user-message .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: inline-block;
+            text-align: left;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: #999;
+            margin-top: 5px;
+            margin-left: 5px;
+        }
+
+        .user-message .message-time {
+            margin-right: 5px;
+        }
+
+        .quick-replies {
+            padding: 15px 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .quick-btn {
+            padding: 8px 15px;
+            border: 1px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .quick-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            outline: none;
+            font-size: 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        #user-input:focus {
+            border-color: #667eea;
+        }
+
+        #send-btn {
+            width: 50px;
+            height: 50px;
+            border: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #send-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            width: fit-content;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #667eea;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+
+        .status-bar {
+            background: #fff3cd;
+            color: #856404;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            border-bottom: 1px solid #ffeaa7;
+        }
+
+        @media (max-width: 600px) {
+            .chat-container {
+                height: 100vh;
+                border-radius: 0;
+            }
+            
+            body {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="bot-avatar">🤖</div>
+            <div class="header-info">
+                <h2>Quotes Bot</h2>
+                <p>Your daily dose of inspiration</p>
+            </div>
+            <span class="demo-badge">DEMO</span>
+        </div>
+        
+        <div class="status-bar">
+            ⚡ This is a demo mode. For full functionality, install Rasa with Python 3.8-3.10
+        </div>
+        
+        <div class="chat-messages" id="chat-messages">
+            <div class="message bot-message">
+                <div class="message-content">
+                    Hello! I'm your Quotes Recommendation Bot. How can I brighten your day today? 
+                    Ask me for <strong>motivation</strong>, <strong>inspiration</strong>, <strong>love</strong> quotes, 
+                    something <strong>funny</strong>, or <strong>success</strong> advice!
+                </div>
+                <div class="message-time" id="welcome-time"></div>
+            </div>
+        </div>
+        
+        <div class="quick-replies">
+            <button class="quick-btn" onclick="sendQuickMessage('I need motivation')">💪 Motivation</button>
+            <button class="quick-btn" onclick="sendQuickMessage('Inspire me')">✨ Inspiration</button>
+            <button class="quick-btn" onclick="sendQuickMessage('Love quote')">❤️ Love</button>
+            <button class="quick-btn" onclick="sendQuickMessage('Tell me a joke')">😄 Funny</button>
+            <button class="quick-btn" onclick="sendQuickMessage('Success quote')">🎯 Success</button>
+        </div>
+        
+        <div class="chat-input-container">
+            <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
+            <button id="send-btn" onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
+    <script>
+        // Quote database for demo mode
+        const quotesDB = {
+            motivation: [
+                "Believe you can and you're halfway there. - Theodore Roosevelt",
+                "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt",
+                "Don't watch the clock; do what it does. Keep going. - Sam Levenson",
+                "The only way to do great work is to love what you do. - Steve Jobs",
+                "Success is not final, failure is not fatal: it is the courage to continue that counts. - Winston Churchill"
+            ],
+            inspiration: [
+                "What lies behind us and what lies before us are tiny matters compared to what lies within us. - Ralph Waldo Emerson",
+                "The best way to predict the future is to create it. - Peter Drucker",
+                "You miss 100% of the shots you don't take. - Wayne Gretzky",
+                "Whether you think you can or you think you can't, you're right. - Henry Ford",
+                "I have not failed. I've just found 10,000 ways that won't work. - Thomas Edison"
+            ],
+            love: [
+                "The best thing to hold onto in life is each other. - Audrey Hepburn",
+                "Love is composed of a single soul inhabiting two bodies. - Aristotle",
+                "The greatest happiness of life is the conviction that we are loved. - Victor Hugo",
+                "Love isn't something you find. Love is something that finds you. - Loretta Young",
+                "To love and be loved is to feel the sun from both sides. - David Viscott"
+            ],
+            funny: [
+                "I am so clever that sometimes I don't understand a single word of what I am saying. - Oscar Wilde",
+                "People say nothing is impossible, but I do nothing every day. - A.A. Milne",
+                "Life is like a sewer… what you get out of it depends on what you put into it. - Tom Lehrer",
+                "My bed is a magical place where I suddenly remember everything I forgot to do.",
+                "Common sense is like deodorant. The people who need it most never use it."
+            ],
+            success: [
+                "Success is not the key to happiness. Happiness is the key to success. - Albert Schweitzer",
+                "The road to success and the road to failure are almost exactly the same. - Colin R. Davis",
+                "Success usually comes to those who are too busy to be looking for it. - Henry David Thoreau",
+                "Don't be afraid to give up the good to go for the great. - John D. Rockefeller",
+                "I find that the harder I work, the more luck I seem to have. - Thomas Jefferson"
+            ]
+        };
+
+        const greetings = [
+            "Hey! How can I brighten your day today?",
+            "Hello! What kind of inspiration are you looking for?",
+            "Hi there! Ready to get inspired?",
+            "Greetings! How can I help you today?"
+        ];
+
+        const helpfulResponses = [
+            "Was this helpful? Let me know if you'd like another quote or a different type of inspiration!",
+            "Did you like this quote? I can share more if you'd like!",
+            "Hope this resonated with you! Would you like more quotes?"
+        ];
+
+        // Intent detection patterns - comprehensive with partial word matching
+        const intentPatterns = {
+            // Greetings - various ways to say hello
+            greet: /\b(hi|hello|hey|greetings|howdy|what'?s\s*up|yo|hiya|good\s*(morning|afternoon|evening)|welcome|hi\s*there|hello\s*there|hey\s*there|howdy|g'?day|morning|evening)\b/i,
+            
+            // Goodbyes - various ways to say goodbye
+            goodbye: /\b(bye|goodbye|see\s*(you|ya)|farewell|take\s*care|catch\s*you\s*later|later|peace|adios|ciao|ttyl|talk\s*to\s*you\s*later|until\s*next\s*time|have\s*a\s*(good|great|nice)|night|sleep\s*well)\b/i,
+            
+            // Motivation - seeking encouragement, drive, ambition
+            motivation: /\b(motivat|motiv|encourag|uplift|boost|drive|ambition|determin|willpower|persever|persist|never\s*give\s*up|keep\s*going|stay\s*strong|push\s*through|overcome|you\s*can\s*do\s*it|don't\s*quit|keep\s*trying|inspire\s*me|need\s*strength|feeling\s*down|need\s*hope)\b/i,
+            
+            // Inspiration - seeking creative/spiritual inspiration
+            inspiration: /\b(inspir|inspo|inspirational|creativ|imagine|dream|vision|wisdom|enlighten|insight|reflect|philosoph|deep\s*thought|meaning|purpose|life|soul|spirit|mindful|meditat|positive|good\s*vibes)\b/i,
+            
+            // Love - romantic quotes, relationships, affection
+            love: /\b(love|romance|romantic|heart|valentine|crush|relationship|affection|adore|cherish|passion|sweetheart|darling|beloved|couple|marriage|wedding|dating|boyfriend|girlfriend|partner|spouse|soulmate)\b/i,
+            
+            // Funny - humor, jokes, laughter
+            funny: /\b(funny|joke|laugh|humor|humour|hilarious|comedy|comic|amusing|entertain|cheer\s*up|make\s*me\s*smile|need\s*a\s*laugh|lighten\s*up|lol|lmao|rofl|haha|hehe|silly|witty|clever|pun)\b/i,
+            
+            // Success - achievement, goals, winning
+            success: /\b(success|successful|achieve|achievement|accomplish|goal|win|winner|victory|triumph|excel|accomplishment|career|business|entrepreneur|leader|leadership|ambition|dream\s*big|reach\s*goals|make\s*it|get\s*ahead|prosper|thrive|rich|wealth|money|fame)\b/i,
+            
+            // Bot challenge - asking about the bot
+            bot_challenge: /\b(are\s*you\s*a\s*(bot|robot|human|person|real)|who\s*are\s*you|what\s*are\s*you|are\s*you\s*real|is\s*this\s*a\s*bot|talk\s*to\s*human|real\s*person|customer\s*service|ai|artificial\s*intelligence|chatbot)\b/i,
+            
+            // Not satisfied - user wants something else
+            not_satisfied: /\b(not\s*helpful|not\s*good|don't\s*like|do\s*not\s*like|dislike|hate|boring|lame|terrible|awful|bad|another\s*one|try\s*again|different|something\s*else|not\s*that|meh|nah|no\s*thanks|not\s*funny|not\s*inspiring|next|more)\b/i,
+            
+            // Satisfied - user is happy
+            satisfied: /\b(thank|thanks|thankful|appreciate|grateful|helpful|like\s*this|love\s*this|great|awesome|perfect|amazing|wonderful|fantastic|excellent|good\s*job|well\s*done|brilliant|cool|nice|sweet|lovely|beautiful)\b/i,
+            
+            // Request quote - general request for quotes
+            request_quote: /\b(quote|quotes|saying|wisdom|words?|phrase|passage|line|verse|proverb|maxim|aphorism|give\s*me|show\s*me|tell\s*me|share|need|want|get|find|looking\s*for|searching\s*for)\b/i,
+            
+            // Help - user needs assistance
+            help: /\b(help|assist|support|how\s*to|how\s*do|what\s*can|what\s*do|guide|explain|tutorial|instructions|confused|don't\s*understand|lost)\b/i
+        };
+
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: true 
+            });
+        }
+
+        function detectIntent(message) {
+            const lowerMessage = message.toLowerCase();
+            for (const [intent, pattern] of Object.entries(intentPatterns)) {
+                if (pattern.test(lowerMessage)) {
+                    return intent;
+                }
+            }
+            return 'unknown';
+        }
+
+        function getRandomItem(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function generateResponse(intent, originalMessage) {
+            switch(intent) {
+                case 'greet':
+                    return [getRandomItem(greetings), "Are you looking for motivation, inspiration, love quotes, something funny, or success advice?"];
+                case 'goodbye':
+                    return ["Goodbye! Take care and stay inspired! 👋"];
+                case 'motivation':
+                    return ["💪 Here's some motivation for you:", getRandomItem(quotesDB.motivation), getRandomItem(helpfulResponses)];
+                case 'inspiration':
+                    return ["✨ Here's an inspiring quote:", getRandomItem(quotesDB.inspiration), getRandomItem(helpfulResponses)];
+                case 'love':
+                    return ["❤️ Here's a love quote:", getRandomItem(quotesDB.love), getRandomItem(helpfulResponses)];
+                case 'funny':
+                    return ["😄 Here's something funny:", getRandomItem(quotesDB.funny), getRandomItem(helpfulResponses)];
+                case 'success':
+                    return ["🎯 Here's a success quote:", getRandomItem(quotesDB.success), getRandomItem(helpfulResponses)];
+                case 'bot_challenge':
+                    return ["I am Quotes Bot, here to provide you with inspiring quotes! 🤖✨ I'm powered by AI to help brighten your day with wisdom, motivation, humor, and more."];
+                case 'not_satisfied':
+                    return ["I understand. Let me try again with something different!", getRandomItem(quotesDB.motivation)];
+                case 'satisfied':
+                    return ["You're welcome! I'm glad you liked it. Feel free to ask for more anytime! 🌟"];
+                case 'help':
+                    return ["I can help you with inspirational quotes! Try asking for:",
+                            "• 💪 Motivation - when you need encouragement",
+                            "• ✨ Inspiration - for creative or spiritual uplifting",
+                            "• ❤️ Love - romantic and relationship quotes",
+                            "• 😄 Funny - jokes and humorous quotes",
+                            "• 🎯 Success - achievement and goal-oriented quotes"];
+                case 'request_quote':
+                    // When just asking for a quote generally, pick based on keywords or random
+                    const msg = originalMessage.toLowerCase();
+                    if (msg.match(/motivat|encourag|uplift/)) return generateResponse('motivation');
+                    if (msg.match(/inspir|creativ|dream/)) return generateResponse('inspiration');
+                    if (msg.match(/love|romance|heart/)) return generateResponse('love');
+                    if (msg.match(/funny|joke|laugh|humor/)) return generateResponse('funny');
+                    if (msg.match(/success|achieve|goal|win/)) return generateResponse('success');
+                    // Default to random category
+                    const categories = ['motivation', 'inspiration', 'love', 'funny', 'success'];
+                    const randomCat = categories[Math.floor(Math.random() * categories.length)];
+                    return ["Here's a quote for you:", getRandomItem(quotesDB[randomCat]), getRandomItem(helpfulResponses)];
+                default:
+                    return ["I'd be happy to share quotes with you! Try asking for:",
+                            "💪 Motivation, ✨ Inspiration, ❤️ Love quotes, 😄 Funny quotes, or 🎯 Success quotes",
+                            "You can also say things like 'I need encouragement' or 'Make me laugh!'"];
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('welcome-time').textContent = getCurrentTime();
+            
+            document.getElementById('user-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        });
+
+        function sendQuickMessage(message) {
+            document.getElementById('user-input').value = message;
+            sendMessage();
+        }
+
+        function sendMessage() {
+            const inputElement = document.getElementById('user-input');
+            const message = inputElement.value.trim();
+            
+            if (!message) return;
+            
+            inputElement.value = '';
+            
+            addMessage(message, 'user');
+            
+            showTypingIndicator();
+            
+            // Simulate processing delay
+            setTimeout(() => {
+                removeTypingIndicator();
+                
+                const intent = detectIntent(message);
+                const responses = generateResponse(intent, message);
+                
+                // Add responses with small delay between them
+                responses.forEach((response, index) => {
+                    setTimeout(() => {
+                        addMessage(response, 'bot');
+                    }, index * 800);
+                });
+            }, 1000);
+        }
+
+        function addMessage(text, sender) {
+            const chatMessages = document.getElementById('chat-messages');
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'message-time';
+            timeDiv.textContent = getCurrentTime();
+            
+            messageDiv.appendChild(contentDiv);
+            messageDiv.appendChild(timeDiv);
+            
+            chatMessages.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chat-messages');
+            
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot-message typing';
+            typingDiv.id = 'typing-indicator';
+            
+            const typingIndicator = document.createElement('div');
+            typingIndicator.className = 'typing-indicator';
+            typingIndicator.innerHTML = '<span></span><span></span><span></span>';
+            
+            typingDiv.appendChild(typingIndicator);
+            chatMessages.appendChild(typingDiv);
+            
+            scrollToBottom();
+        }
+
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        function scrollToBottom() {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    </script>
+</body>
+</html>

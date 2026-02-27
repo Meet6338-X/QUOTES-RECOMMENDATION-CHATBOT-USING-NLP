@@ -1,0 +1,187 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+    - hi there
+    - greetings
+    - howdy
+    - hey there
+    - what's up
+    - yo
+    - hiya
+
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+    - talk to you later
+    - catch you later
+    - farewell
+    - take care
+    - until next time
+    - see ya
+
+- intent: motivation
+  examples: |
+    - I need motivation
+    - motivate me
+    - give me a motivational quote
+    - I'm feeling demotivated
+    - I need some motivation
+    - motivate me please
+    - I need encouraging words
+    - give me motivation
+    - I'm feeling low
+    - I need a boost
+    - cheer me up
+    - I need inspiration to keep going
+    - help me stay motivated
+    - I need positive energy
+    - give me strength
+    - I need to stay focused
+
+- intent: inspiration
+  examples: |
+    - inspire me
+    - I need inspiration
+    - give me an inspirational quote
+    - I want to be inspired
+    - inspire me please
+    - I need inspiring words
+    - give me some inspiration
+    - I'm looking for inspiration
+    - share something inspiring
+    - I need uplifting words
+    - inspire me today
+    - give me hope
+    - I need something uplifting
+    - inspire my soul
+    - fill me with inspiration
+
+- intent: love
+  examples: |
+    - love quote
+    - tell me something about love
+    - I want a love quote
+    - give me a love quote
+    - I need love inspiration
+    - tell me about love
+    - love sayings
+    - romantic quote
+    - quotes about love
+    - I need love advice
+    - say something about love
+    - love wisdom
+    - beautiful love quote
+    - tell me a love story
+    - words about love
+
+- intent: funny
+  examples: |
+    - tell me a joke
+    - funny quote
+    - make me laugh
+    - I need something funny
+    - cheer me up with humor
+    - tell me something funny
+    - humor me
+    - make me smile
+    - funny saying
+    - I need a laugh
+    - joke please
+    - something hilarious
+    - funny wisdom
+    - lighten my mood
+    - entertain me
+
+- intent: success
+  examples: |
+    - success quote
+    - quote about success
+    - I need success motivation
+    - tell me about success
+    - wisdom about success
+    - I want to be successful
+    - success advice
+    - how to succeed
+    - success inspiration
+    - motivate me for success
+    - I need career motivation
+    - quotes for achievers
+    - success mindset
+    - win at life
+    - achieve greatness
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot
+    - are you a human
+    - am I talking to a bot
+    - who are you
+    - what are you
+    - are you real
+    - are you an AI
+    - is this a bot
+    - are you human or bot
+    - tell me who you are
+    - are you a robot
+    - are you artificial intelligence
+    - what is your identity
+
+- intent: not_satisfied
+  examples: |
+    - this is not helpful
+    - I don't like this
+    - give me another quote
+    - not what I wanted
+    - this doesn't help
+    - try again
+    - another one please
+    - I need something else
+    - this is boring
+    - not good enough
+    - give me a better one
+    - I'm not satisfied
+    - this doesn't resonate
+    - show me something different
+    - next quote please
+
+- intent: satisfied
+  examples: |
+    - thank you
+    - this is helpful
+    - I like this
+    - great quote
+    - thanks
+    - this is amazing
+    - perfect
+    - exactly what I needed
+    - wonderful
+    - I love this
+    - appreciate it
+    - this resonates with me
+    - well done
+    - awesome quote
+    - you helped me

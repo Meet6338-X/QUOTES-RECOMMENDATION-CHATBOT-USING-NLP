@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotes Recommendation Chatbot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="bot-avatar">🤖</div>
+            <div class="header-info">
+                <h2>Quotes Bot</h2>
+                <p>Your daily dose of inspiration</p>
+            </div>
+        </div>
+        
+        <div class="chat-messages" id="chat-messages">
+            <div class="message bot-message">
+                <div class="message-content">
+                    Hello! I'm your Quotes Recommendation Bot. How can I brighten your day today? 
+                    Ask me for <strong>motivation</strong>, <strong>inspiration</strong>, <strong>love</strong> quotes, 
+                    something <strong>funny</strong>, or <strong>success</strong> advice!
+                </div>
+                <div class="message-time" id="welcome-time"></div>
+            </div>
+        </div>
+        
+        <div class="quick-replies">
+            <button class="quick-btn" onclick="sendQuickMessage('I need motivation')">💪 Motivation</button>
+            <button class="quick-btn" onclick="sendQuickMessage('Inspire me')">✨ Inspiration</button>
+            <button class="quick-btn" onclick="sendQuickMessage('Love quote')">❤️ Love</button>
+            <button class="quick-btn" onclick="sendQuickMessage('Tell me a joke')">😄 Funny</button>
+            <button class="quick-btn" onclick="sendQuickMessage('Success quote')">🎯 Success</button>
+        </div>
+        
+        <div class="chat-input-container">
+            <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
+            <button id="send-btn" onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

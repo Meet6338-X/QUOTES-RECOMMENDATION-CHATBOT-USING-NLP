@@ -1,0 +1,116 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - motivation
+  - inspiration
+  - love
+  - funny
+  - success
+  - bot_challenge
+  - not_satisfied
+  - satisfied
+
+responses:
+  utter_greet:
+    - text: "Hey! How can I brighten your day today?"
+    - text: "Hello! What kind of inspiration are you looking for?"
+    - text: "Hi there! Ready to get inspired?"
+    - text: "Greetings! How can I help you today?"
+    - text: "Hey! What brings you here today?"
+
+  utter_ask:
+    - text: "Are you looking for motivation, inspiration, love quotes, something funny, or success advice?"
+    - text: "What type of quote would you like? I have motivation, inspiration, love, humor, and success quotes."
+    - text: "Tell me what you need - motivation, inspiration, love, funny, or success quotes?"
+
+  utter_motivation:
+    - text: "Believe you can and you're halfway there. - Theodore Roosevelt"
+    - text: "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt"
+    - text: "Don't watch the clock; do what it does. Keep going. - Sam Levenson"
+    - text: "The only way to do great work is to love what you do. - Steve Jobs"
+    - text: "Success is not final, failure is not fatal: it is the courage to continue that counts. - Winston Churchill"
+    - text: "You are never too old to set another goal or to dream a new dream. - C.S. Lewis"
+    - text: "It always seems impossible until it's done. - Nelson Mandela"
+    - text: "The secret of getting ahead is getting started. - Mark Twain"
+    - text: "Your limitation—it's only your imagination."
+    - text: "Push yourself, because no one else is going to do it for you."
+
+  utter_inspiration:
+    - text: "What lies behind us and what lies before us are tiny matters compared to what lies within us. - Ralph Waldo Emerson"
+    - text: "The best way to predict the future is to create it. - Peter Drucker"
+    - text: "You miss 100% of the shots you don't take. - Wayne Gretzky"
+    - text: "Whether you think you can or you think you can't, you're right. - Henry Ford"
+    - text: "I have not failed. I've just found 10,000 ways that won't work. - Thomas Edison"
+    - text: "The only impossible journey is the one you never begin. - Tony Robbins"
+    - text: "Everything you've ever wanted is on the other side of fear. - George Addair"
+    - text: "Hardships often prepare ordinary people for an extraordinary destiny. - C.S. Lewis"
+    - text: "Dream big and dare to fail. - Norman Vaughan"
+    - text: "It is during our darkest moments that we must focus to see the light. - Aristotle"
+
+  utter_love:
+    - text: "The best thing to hold onto in life is each other. - Audrey Hepburn"
+    - text: "Love is composed of a single soul inhabiting two bodies. - Aristotle"
+    - text: "The greatest happiness of life is the conviction that we are loved. - Victor Hugo"
+    - text: "Love isn't something you find. Love is something that finds you. - Loretta Young"
+    - text: "To love and be loved is to feel the sun from both sides. - David Viscott"
+    - text: "Love is friendship that has caught fire. - Ann Landers"
+    - text: "Where there is love there is life. - Mahatma Gandhi"
+    - text: "The giving of love is an education in itself. - Eleanor Roosevelt"
+    - text: "We are most alive when we're in love. - John Updike"
+    - text: "Love is when the other person's happiness is more important than your own. - H. Jackson Brown, Jr."
+
+  utter_funny:
+    - text: "I am so clever that sometimes I don't understand a single word of what I am saying. - Oscar Wilde"
+    - text: "People say nothing is impossible, but I do nothing every day. - A.A. Milne"
+    - text: "Life is like a sewer… what you get out of it depends on what you put into it. - Tom Lehrer"
+    - text: "My bed is a magical place where I suddenly remember everything I forgot to do."
+    - text: "Common sense is like deodorant. The people who need it most never use it."
+    - text: "If at first you don't succeed, then skydiving definitely isn't for you. - Steven Wright"
+    - text: "I used to think I was indecisive, but now I'm not too sure."
+    - text: "I'm on a seafood diet. I see food and I eat it."
+    - text: "Life is short. Smile while you still have teeth."
+    - text: "Some people are like clouds. When they disappear, it's a beautiful day."
+
+  utter_success:
+    - text: "Success is not the key to happiness. Happiness is the key to success. - Albert Schweitzer"
+    - text: "The road to success and the road to failure are almost exactly the same. - Colin R. Davis"
+    - text: "Success usually comes to those who are too busy to be looking for it. - Henry David Thoreau"
+    - text: "Don't be afraid to give up the good to go for the great. - John D. Rockefeller"
+    - text: "I find that the harder I work, the more luck I seem to have. - Thomas Jefferson"
+    - text: "There are no secrets to success. It is the result of preparation, hard work, and learning from failure. - Colin Powell"
+    - text: "If you really look closely, most overnight successes took a long time. - Steve Jobs"
+    - text: "The only place where success comes before work is in the dictionary. - Vidal Sassoon"
+    - text: "Success is walking from failure to failure with no loss of enthusiasm. - Winston Churchill"
+    - text: "The way to get started is to quit talking and begin doing. - Walt Disney"
+
+  utter_helpful:
+    - text: "Was this helpful? Let me know if you'd like another quote or a different type of inspiration!"
+    - text: "Did you like this quote? I can share more if you'd like!"
+    - text: "Hope this resonated with you! Would you like more quotes?"
+
+  utter_goodbye:
+    - text: "Goodbye! Take care and stay inspired!"
+    - text: "See you later! Remember, you're amazing!"
+    - text: "Bye! Wishing you a wonderful day!"
+    - text: "Take care! Come back anytime you need inspiration!"
+
+  utter_iamabot:
+    - text: "I am a bot, powered by Rasa. I'm here to provide you with inspiring quotes!"
+    - text: "Yes, I'm an AI assistant built to share motivational and inspirational quotes with you."
+    - text: "I'm a chatbot created to help brighten your day with meaningful quotes!"
+
+  utter_notsatisfied:
+    - text: "I understand. Let me try again with something different."
+    - text: "No problem! Here's another one that might resonate better."
+    - text: "Let me share a different quote for you."
+
+  utter_satisfied:
+    - text: "You're welcome! I'm glad you liked it. Feel free to ask for more anytime!"
+    - text: "So happy to hear that! Come back whenever you need more inspiration!"
+    - text: "Thank you! I'm here whenever you need a boost!"
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

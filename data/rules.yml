@@ -1,0 +1,29 @@
+version: "3.1"
+
+rules:
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+- rule: repeat the task when the user is not satisfied
+  steps:
+  - intent: not_satisfied
+  - action: utter_notsatisfied
+
+- rule: say thanks when the user is satisfied
+  steps:
+  - intent: satisfied
+  - action: utter_satisfied
+
+- rule: Greet user at start
+  conversation_start: true
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_ask

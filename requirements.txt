@@ -1,0 +1,21 @@
+# Quotes Recommendation Chatbot - Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core Rasa Framework
+rasa==3.6.0
+
+# Rasa SDK for Custom Actions
+rasa-sdk==3.6.0
+
+# Web Framework (for future custom actions)
+flask==2.3.3
+
+# Additional NLP Support
+spacy==3.6.0
+
+# Utilities
+requests==2.31.0
+python-dotenv==1.0.0
+
+# Note: After installing, download spacy model with:
+# python -m spacy download en_core_web_md
