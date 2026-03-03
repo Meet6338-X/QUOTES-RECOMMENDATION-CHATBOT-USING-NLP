@@ -27,9 +27,9 @@ env/
 ENV/
 
 # Rasa
-models/
+# models/  # Keeping models for distribution
 .rasa/
-*.tar.gz
+# *.tar.gz  # Keeping model files for distribution
 
 # IDE
 .vscode/
