@@ -1,6 +1,8 @@
 /**
  * Standalone QuoteBot - Works without Rasa server
  * This provides the same functionality as the Rasa chatbot but runs entirely client-side
+ * 
+ * # v2 - Standalone version without Rasa dependency
  */
 
 // Quotes database (same as Rasa actions)
