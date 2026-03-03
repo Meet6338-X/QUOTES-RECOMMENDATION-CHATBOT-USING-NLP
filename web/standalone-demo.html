@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuoteBot - AI Quote Assistant (Standalone)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .mode-indicator {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1001;
+            box-shadow: 0 4px 12px rgba(17, 153, 142, 0.3);
+        }
+        
+        .standalone-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 8px;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mode-indicator">
+        ⚡ Standalone Mode <span class="standalone-badge">No Server Required</span>
+    </div>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="bot-avatar"><img src="../demo_chat.png" alt="Bot"></div>
+            <div class="header-info">
+                <h2>QuoteBot <span class="verified-badge">✓</span></h2>
+                <p><span class="status-dot"></span> AI-powered quote assistant</p>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="clearChat()" title="Clear chat">🗑️</button>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chat-messages">
+            <div class="welcome-message">
+                <div class="welcome-icon">✨</div>
+                <h3>Welcome to QuoteBot!</h3>
+                <p>I'm your personal AI assistant for discovering inspiring, motivational, and heartwarming quotes. Running in standalone mode - no server needed!</p>
+            </div>
+        </div>
+
+        <div class="quick-replies">
+            <button class="quick-reply-btn" onclick="sendQuickMessage('I need inspiration')">🌟 Inspiration</button>
+            <button class="quick-reply-btn" onclick="sendQuickMessage('Tell me a funny quote')">😄 Funny</button>
+            <button class="quick-reply-btn" onclick="sendQuickMessage('Love quotes')">❤️ Love</button>
+            <button class="quick-reply-btn" onclick="sendQuickMessage('Success quotes')">🎯 Success</button>
+        </div>
+
+        <div class="chat-input-container">
+            <div class="input-wrapper">
+                <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
+            </div>
+            <button class="send-btn" onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
+    <footer class="team-credits">
+        <div class="credits-container">
+            <p class="credits-label">Created by</p>
+            <div class="team-members">
+                <span class="team-member">Meet Shah</span>
+                <span class="separator">•</span>
+                <span class="team-member">Mayuresh Kulkarni</span>
+                <span class="separator">•</span>
+                <span class="team-member">Mohit Mukane</span>
+                <span class="separator">•</span>
+                <span class="team-member">Naisargi Meshram</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="standalone.js"></script>
+    <script>
+        // Chat state
+        let chatHistory = [];
+        
+        // Initialize chat
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('user-input');
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // Add initial greeting after a short delay
+            setTimeout(() => {
+                addMessage('bot', "Hello! 👋 I'm QuoteBot, your personal quote assistant. I can help you find inspiring, funny, love, or success quotes. What type of quote are you looking for today?");
+            }, 500);
+        });
+
+        // Send message function
+        function sendMessage() {
+            const input = document.getElementById('user-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message
+            addMessage('user', message);
+            input.value = '';
+            
+            // Process message using standalone bot
+            const response = processMessage(message);
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            // Respond after a short delay (simulating processing)
+            setTimeout(() => {
+                removeTypingIndicator();
+                addMessage('bot', response.text);
+                
+                // Add follow-up for quotes
+                if (response.isQuote) {
+                    setTimeout(() => {
+                        const followUps = [
+                            "Was this helpful? Let me know if you'd like another quote or a different type of inspiration!",
+                            "Hope you enjoyed that! Want more quotes or something different?",
+                            "That's one of my favorites! Would you like another?"
+                        ];
+                        addMessage('bot', followUps[Math.floor(Math.random() * followUps.length)]);
+                    }, 1000);
+                }
+            }, 600 + Math.random() * 400);
+        }
+
+        // Send quick message from buttons
+        function sendQuickMessage(message) {
+            document.getElementById('user-input').value = message;
+            sendMessage();
+        }
+
+        // Add message to chat
+        function addMessage(sender, text) {
+            const chatMessages = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            
+            const currentTime = new Date().toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+            
+            // Convert markdown-style formatting
+            let formattedText = text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n/g, '<br>');
+            
+            messageDiv.innerHTML = `
+                <div class="message-content">${formattedText}</div>
+                <div class="message-time">${currentTime}</div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Save to history
+            chatHistory.push({ sender, text, time: currentTime });
+        }
+
+        // Show typing indicator
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chat-messages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot-message typing';
+            typingDiv.id = 'typing-indicator';
+            typingDiv.innerHTML = `
+                <div class="typing-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            `;
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Remove typing indicator
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        // Clear chat
+        function clearChat() {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML = `
+                <div class="welcome-message">
+                    <div class="welcome-icon">✨</div>
+                    <h3>Welcome to QuoteBot!</h3>
+                    <p>I'm your personal AI assistant for discovering inspiring, motivational, and heartwarming quotes. Running in standalone mode - no server needed!</p>
+                </div>
+            `;
+            chatHistory = [];
+            
+            // Add greeting again
+            setTimeout(() => {
+                addMessage('bot', "Hello! 👋 I'm QuoteBot, your personal quote assistant. I can help you find inspiring, funny, love, or success quotes. What type of quote are you looking for today?");
+            }, 300);
+        }
+    </script>
+</body>
+</html>
