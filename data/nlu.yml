@@ -48,6 +48,7 @@ nlu:
     - I need motivation
     - motivate me
     - give me a motivational quote
+    - motivational quotes
     - I'm feeling demotivated
     - I need some motivation
     - motivate me please
@@ -61,12 +62,16 @@ nlu:
     - I need positive energy
     - give me strength
     - I need to stay focused
+    - Motivation quotes
+    - Give me motivational quotes
+    - Show me motivation quotes
 
 - intent: inspiration
   examples: |
     - inspire me
     - I need inspiration
     - give me an inspirational quote
+    - inspirational quotes
     - I want to be inspired
     - inspire me please
     - I need inspiring words
@@ -79,13 +84,18 @@ nlu:
     - I need something uplifting
     - inspire my soul
     - fill me with inspiration
+    - Inspiration quotes
+    - Give me inspiration quotes
+    - Show me inspirational quotes
 
 - intent: love
   examples: |
     - love quote
+    - love quotes
     - tell me something about love
     - I want a love quote
     - give me a love quote
+    - give me love quotes
     - I need love inspiration
     - tell me about love
     - love sayings
@@ -97,11 +107,16 @@ nlu:
     - beautiful love quote
     - tell me a love story
     - words about love
+    - Love quotes
+    - I want love quotes
+    - Show me love quotes
+    - Give me some love quotes
 
 - intent: funny
   examples: |
     - tell me a joke
     - funny quote
+    - funny quotes
     - make me laugh
     - I need something funny
     - cheer me up with humor
@@ -115,11 +130,17 @@ nlu:
     - funny wisdom
     - lighten my mood
     - entertain me
+    - Funny quotes
+    - Give me funny quotes
+    - Show me funny quotes
 
 - intent: success
   examples: |
     - success quote
+    - success quotes
+    - Success quotes
     - quote about success
+    - quotes about success
     - I need success motivation
     - tell me about success
     - wisdom about success
@@ -133,6 +154,9 @@ nlu:
     - success mindset
     - win at life
     - achieve greatness
+    - Give me success quotes
+    - Show me success quotes
+    - I want success quotes
 
 - intent: bot_challenge
   examples: |

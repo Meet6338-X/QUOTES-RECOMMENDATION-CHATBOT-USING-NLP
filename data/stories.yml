@@ -4,6 +4,7 @@ stories:
 - story: inspiration
   steps:
   - intent: greet
+  - action: utter_greet
   - action: utter_ask
   - intent: inspiration
   - action: utter_inspiration
@@ -12,6 +13,7 @@ stories:
 - story: motivation
   steps:
   - intent: greet
+  - action: utter_greet
   - action: utter_ask
   - intent: motivation
   - action: utter_motivation
@@ -20,6 +22,7 @@ stories:
 - story: love
   steps:
   - intent: greet
+  - action: utter_greet
   - action: utter_ask
   - intent: love
   - action: utter_love
@@ -28,6 +31,7 @@ stories:
 - story: funny
   steps:
   - intent: greet
+  - action: utter_greet
   - action: utter_ask
   - intent: funny
   - action: utter_funny
@@ -36,6 +40,7 @@ stories:
 - story: success
   steps:
   - intent: greet
+  - action: utter_greet
   - action: utter_ask
   - intent: success
   - action: utter_success
@@ -74,6 +79,7 @@ stories:
 - story: interactive session with satisfaction
   steps:
   - intent: greet
+  - action: utter_greet
   - action: utter_ask
   - intent: motivation
   - action: utter_motivation
@@ -84,10 +90,10 @@ stories:
 - story: interactive session with dissatisfaction
   steps:
   - intent: greet
+  - action: utter_greet
   - action: utter_ask
   - intent: inspiration
   - action: utter_inspiration
   - action: utter_helpful
   - intent: not_satisfied
   - action: utter_notsatisfied
-  - action: utter_inspiration
